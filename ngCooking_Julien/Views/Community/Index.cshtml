@@ -1,0 +1,56 @@
+﻿@model ngCooking_Julien.Models.CommunityIndexViewModel
+
+@Html.HiddenFor(m => m.fromIndex)
+@Html.HiddenFor(m => m.display)
+@Html.HiddenFor(m => m.dbSize)
+
+<section class="section">
+    <h1 class="page-title" id="CommunitySearchTitle">
+        Nos cuistots de A à Z
+    </h1>
+
+    <!-- SORT -->
+    <div class="sort">
+        <p>
+            <span class="span-label">Trier par :</span>
+            <select name="orderSelect" id="orderSelect">
+                <option value="az">Ordre alphabétique (A->Z)</option>
+                <option value="za">Ordre alphabétique (Z->A)</option>
+                <option value="exp">Les mieux notés d'abord</option>
+                <option value="nov">Les moins bien notés d'abord</option>
+                <option value="prod">Les plus productifs d'abord</option>
+                <option value="prod_desc">Les moins productifs d'abord</option>
+            </select>
+        </p>
+    </div>
+    <!-- SORT -->
+    <!-- SHOWLESS BUTTON -->
+    <div class="row showmore">
+        <div class="col-xs-12">
+            <a class="btn btn_color1" id="ShowLess_btn">
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                Afficher moins
+            </a>
+        </div>
+    </div>
+    <br />
+    <!-- SHOWLESS BUTTON -->
+    <!-- USERS -->
+    <div id="CommunityDisplay">
+    </div>
+    <!-- USERS -->
+    <!-- SHOWMORE BUTTON -->
+    <div class="row showmore">
+        <div class="col-xs-12">
+            <a class="btn btn_color1" id="ShowMore_btn">
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                Afficher d'avantage
+            </a>
+        </div>
+    </div>
+    <!-- SHOWMORE BUTTON -->
+</section>
+
+@section scripts {
+    @Scripts.Render("~/bundles/CommunityScripts")
+}

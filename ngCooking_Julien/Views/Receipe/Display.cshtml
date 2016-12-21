@@ -1,0 +1,149 @@
+﻿@model ngCooking_Julien.Models.RecetteViewModel
+
+<h1 class="page-title">Les recettes</h1>
+<section class="section">
+    <h2 class="title">~ Trouver une recette ~</h2>
+    <div class="panel">
+        <div class="row imgback">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-12 col-sm-9 fp">
+                <div class="filters" id="filters">
+                    @using (Ajax.BeginForm("Display", "Receipe", new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        UpdateTargetId = "ReceipeDisplay",
+                        InsertionMode = InsertionMode.Replace
+                    }))
+                    {
+                        <!-- NAME FILTER -->
+                        <div class="filter">
+                            <p><label for="">Nom de la recette</label></p>
+                            <p><input type="text" placeholder="ex: Tajine de poulet" name="NameFilter" id="NameFilter"></p>
+                        </div>
+
+                        <!-- INGREDIENTS FILTER -->
+                        <div class="filter">
+                            <p><label for="">Ingrédient(s) utlisé(s) pour la recette</label></p>
+                            <p><input type="text" placeholder="ex: poulet, oeuf, farine" name="IngFilter" id="IngFilter"></p>
+                        </div>
+
+                        <!-- CALORIES FILTER -->
+                        <div class="filter">
+                            <p><label for="">Valeur calorique de la recette  <span class="fwn">(kcal/100g)</span></label></p>
+                            <p>
+                                <span class="span-label">entre : </span>
+                                <input type="number" class="mr0" placeholder="ex: 450" name="CaloriesFilterMin" id="CaloriesFilterMin">
+                                <span class="span-label">et</span>
+                                <input type="number" class="mr0" placeholder="ex: 750" name="CaloriesFilterMax" id="CaloriesFilterMax">
+                            </p>
+                        </div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <button type="submit" class="btn btn_big btn_color1" value="Submit" id="SubmitBtn">
+                            Rechercher
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SORT -->
+    <div class="sort">
+        <p>
+            <span class="span-label">Trier par :</span>
+            <select name="orderSelect" id="orderSelect">
+                <option value="az">Ordre alphabétique (A->Z)</option>
+                <option value="za">Ordre alphabétique (Z->A)</option>
+                <option value="new">Les plus récentes d'abord</option>
+                <option value="old">Les plus anciennes d'abord</option>
+                <option value="best">Les mieux notées d'abord</option>
+                <option value="worst">Les moins bien notées d'abord</option>
+                <option value="cal">Du moins calorique au plus calorique</option>
+                <option value="cal_desc">Du plus calorique au moins calorique</option>
+            </select>
+        </p>
+    </div>
+    <!-- SORT -->
+    <div class="result" id="ReceipeDisplay" name="ReceipeDisplay">
+        @Html.Partial("_ReceipeDisplay", Model)
+    </div>
+    <!--
+    <div class="row showmore">
+        <div class="col-xs-12">
+            <button type="button" class="btn btn_color1"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+        </div>
+    </div>
+    -->
+</section>
+
+<!-- BEST RECEIPES -->
+<section class="section">
+    <h2 class="title">~ Meilleures recettes ~</h2>
+    <div class="recettes row">
+        @foreach (var item in Model.bestRecettesData)
+        {
+            <div class="col-xs-6 col-sm-3 recette">
+                <a href="/Receipe/Details/@item.id">
+                    <img src=~/Content/@item.picture alt=@item.name>
+                    <div class="top" title=@item.rating>
+                        <span>
+                            @for (int i = 5; i > 0; i--)
+                            {
+                                if (i <= @item.rating)
+                                {
+                                    <span class="glyphicon glyphicon-heart"></span>
+                                }
+                                else
+                                {
+                                    <span class="glyphicon glyphicon-heart-empty"></span>
+                                }
+                            }
+                        </span>
+                    </div>
+                    <div class="bot">
+                        <p class="name">@item.name</p>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</section>
+<!-- BEST RECEIPES -->
+<!-- NEW RECEIPES -->
+<section class="section">
+    <h2 class="title">~ Nouvelles recettes ~</h2>
+    <div class="recettes row">
+        @foreach (var item in Model.newRecettesData)
+        {
+            <div class="col-xs-6 col-sm-3 recette">
+                <a href="/Receipe/Details/@item.id">
+                    <img src=~/Content/@item.picture alt=@item.name>
+                    <div class="top" title=@item.rating>
+                        <span>
+                            @for (int i = 5; i > 0; i--)
+                            {
+                                if (i <= @item.rating)
+                                {
+                                    <span class="glyphicon glyphicon-heart"></span>
+                                }
+                                else
+                                {
+                                    <span class="glyphicon glyphicon-heart-empty"></span>
+                                }
+                            }
+                        </span>
+                    </div>
+                    <div class="bot">
+                        <p class="name">@item.name</p>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</section>
+<!-- NEW RECEIPES -->
+
+@section scripts {
+    @Scripts.Render("~/bundles/ReceipeScripts")
+}

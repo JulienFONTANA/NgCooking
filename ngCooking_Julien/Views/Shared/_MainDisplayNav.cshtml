@@ -1,0 +1,53 @@
+﻿<nav id="nav">
+    <ul class="menu">
+        @if (ViewBag.Where == "Home")
+        {
+            <li class="page_hom active">@Html.ActionLink("Accueil", "Index", "Home")</li> }
+        else
+        {
+            <li class="page_hom">@Html.ActionLink("Accueil", "Index", "Home")</li> }
+
+        @if (ViewBag.Where == "Receipe")
+        {
+            <li class="page_rec active">@Html.ActionLink("Recettes", "Display", "Receipe")</li> }
+        else
+        {
+            <li class="page_rec">@Html.ActionLink("Recettes", "Display", "Receipe")</li> }
+
+        @if (ViewBag.Where == "Ingredients")
+        {
+            <li class="page_ing active">@Html.ActionLink("Ingredients", "Display", "Ingredients")</li>
+        }
+        else
+        {
+            <li class="page_ing">@Html.ActionLink("Ingredients", "Display", "Ingredients")</li>
+        }
+
+        @if (ViewBag.Where == "Community")
+        {
+            <li class="page_com active">@Html.ActionLink("Communauté", "Index", "Community")</li>
+        }
+        else
+        {
+            <li class="page_com">@Html.ActionLink("Communauté", "Index", "Community")</li>
+        }
+    </ul>
+
+    <div class="account-area">
+
+        <a href="@Url.Action("Login", "Community")" class="button connect" id="ConnectBtn">
+            <span class="icon" aria-hidden="true"></span>
+            Connexion
+        </a>
+
+        <a href="@Url.Action("RedirectToComDetails", "Community")" class="button account" id="ProfilBtn">
+            <span class="icon" aria-hidden="true"></span>
+            Mon profil
+        </a>
+
+        <a href="@Url.Action("Logout", "Community")" class="button deconnect" id="DiscoBtn">
+            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            Deconnexion
+        </a>
+    </div>
+</nav>

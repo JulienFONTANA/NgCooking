@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>NgCooking</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="c17 engineering" />
+    <meta name="copyright" content="c17 engineering" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="apple-mobile-web-app-title" content="c17 engineering, recettes de cuisine à partager">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="shortcut icon" href="~/favicon.png" />
+    <link rel="image_src" href="~/favicon.png" />
+    <link rel="icon" type="image/png" href="~/favicon.png" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/NavigationScripts")
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- HEADER STARTS HERE -->
+        <header id="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="/" class="logo">
+                            <img src="~/Content/img/logo_header.png" alt="">
+                        </a>
+                        @Html.Action("ReceipeCount", "_Tool")
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="mobile-menu-btn">
+                <i class="glyphicon glyphicon-menu-hamburger"></i>
+            </button>
+        </header>
+        <!-- HEADER ENDS HERE -->
+
+        <!-- MAIN STARTS HERE -->
+        <main id="main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3" id="col-nav">
+                        <button type="button" id="mobile-close-btn">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+
+                        @Html.Partial("_MainDisplayNav")
+
+                    </div>
+                    <div class="col-xs-12 col-sm-9">
+                        <div class="content" id="content_home">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN ENDS HERE -->
+        <!-- FOOTER STARTS HERE -->
+        <footer id="footer">
+            <div class="container">
+                <div class="row cuisto-img-wrap">
+                    <div class="hidden-xs col-sm-3">
+                        <div class="cuisto-img"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-9">
+
+                        <a href="@Url.Action("Index", "Home")" class="btn btn_color1">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            Revenir à l'acceuil
+                        </a>
+
+                        <a href="#" class="btn btn_color1">
+                            <span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span>
+                            Top
+                        </a>
+
+                        <div class="hr"></div>
+                        <p>Made by Julien FONTANA</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- FOOTER ENDS HERE -->
+    </div>
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>

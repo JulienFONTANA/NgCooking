@@ -1,0 +1,79 @@
+﻿@model ngCooking_Julien.Models.HomeRecetteViewModel
+
+<h1 class="page-title">Bienvenue sur ngCooking!</h1>
+<!-- BEST RECEIPES -->
+<h2 class="title">~ Meilleurs recettes ~</h2>
+<div class="recettes row">
+    @foreach (var item in Model.bestRecettesData)
+    {
+        <div class="col-xs-6 col-sm-3 recette">
+            <a href="/Receipe/Details/@item.id">
+                <img src=~/Content/@item.picture alt=@item.name>
+                <div class="top" title=@item.rating>
+                    <span>
+                        @for (int i = 5; i > 0; i--)
+                        {
+                            if (i <= @item.rating)
+                            {
+                                <span class="glyphicon glyphicon-heart"></span>
+                            }
+                            else
+                            {
+                                <span class="glyphicon glyphicon-heart-empty"></span>
+                            }
+                        }
+                    </span>
+                </div>
+                <div class="bot">
+                    <p class="name">@item.name</p>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+<!-- BEST RECEIPES -->
+
+<!-- CREATE RECEIPES -->
+<section class="section newrecette">
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="c">Vous en avez sous la toque ?!</p>
+            <p class="b">
+                <a href="/Receipe/Create" class="btn btn_color1"><span class="glyphicon glyphicon-plus-sign"></span><span>Créez une nouvelle recette</span></a>
+            </p>
+        </div>
+    </div>
+</section>
+<!-- CREATE RECEIPES -->
+
+<!-- NEW RECEIPES -->
+<h2 class="title">~ Nouvelles recettes ~</h2>
+<div class="recettes row">
+    @foreach (var item in Model.newRecettesData)
+    {
+        <div class="col-xs-6 col-sm-3 recette">
+            <a href="/Receipe/Details/@item.id">
+                <img src=~/Content/@item.picture alt=@item.name>
+                <div class="top" title=@item.rating>
+                    <span>
+                        @for (int i = 5; i > 0; i--)
+                        {
+                            if (i <= @item.rating)
+                            {
+                                <span class="glyphicon glyphicon-heart"></span>
+                            }
+                            else
+                            {
+                                <span class="glyphicon glyphicon-heart-empty"></span>
+                            }
+                        }
+                    </span>
+                </div>
+                <div class="bot">
+                    <p class="name">@item.name</p>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+<!-- NEW RECEIPES -->

@@ -1,0 +1,42 @@
+﻿@model ngCooking_Julien.Models.CommunityIndexViewModel
+
+<div class="users row">
+    @foreach (var item in Model.cData)
+    {
+        <div class="col-xs-6 col-sm-3 user">
+            <a href="/Community/Details/@item.id">
+                <img src=~/Content/@item.picture alt=@item.surname>
+                <div class="text">
+                    <p class="name">@item.firstname @item.surname</p>
+                    <p class="level">
+                        @if (@item.level == 1)
+                        {
+                            <span class="stars">
+                                <span class="glyphicon glyphicon-star"></span>
+                            </span>
+                                <span class="status">Novice</span>
+                        }
+                        else if (@item.level == 2)
+                        {
+                            <span class="stars">
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                            </span>
+                                <span class="status">Confirmé</span>
+                        }
+                        else
+                        {
+                            <span class="stars">
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                            </span>
+                                <span class="status">Expert</span>
+                        }
+                    </p>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,155 @@
+﻿@model ngCooking_Julien.Models.ReceipeDetailsViewModel
+
+<!-- Section "Recette" -->
+<section class="section">
+    <div class="row">
+        <div class="col-xs-4">
+            <img class="recette_img" src=~/Content/@Model.recette.picture alt=@Model.recette.name>
+        </div>
+        <div class="col-xs-8">
+            <h1 class="rec_name">@Model.recette.name</h1>
+            <p class="rec_note">
+                <span>
+                    @for (int i = 5; i > 0; i--)
+                    {
+                        if (i <= @Model.recette.rating)
+                        {
+                    <span class="star glyphicon glyphicon-heart"></span>
+                        }
+                        else
+                        {
+                    <span class="star glyphicon glyphicon-heart-empty"></span>
+                        }
+                    }
+                </span>
+                <span class="notes">| @Model.recette.preciseRating/5 - @Model.comments.Count votes</span>
+            </p>
+            <div class="ingredients_list">
+                <p class="list-title">Ingrédients</p>
+                <ul class="list">
+                    @foreach (var item in Model.ingredients)
+                    {
+                    <li class="item">
+                        <img class="item-img" src="~/Content/img/ingredients/@item.picture" alt="@item.name">
+                        <p class="item-name" title="@item.name">@item.name</p>
+                    </li>
+                    }
+                </ul>
+            </div>
+            <p class="rec_cal">Valeur calorique <span class="for">(100g)</span> : <span class="val">@Model.recette.calories kcal</span></p>
+        </div>
+    </div>
+</section>
+
+<!-- Section "Preparation" -->
+<section class="section">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="overline-title"><span class="text">Préparation</span></h2>
+        </div>
+        <div class="col-xs-12">
+            @Html.Raw(Model.recette.preparation)
+        </div>
+    </div>
+</section>
+
+<!-- Section "Commentaires" -->
+<section class="section">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="overline-title"><span class="text">Commentaires</span></h2>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="panel">
+                <div class="filters">
+                    <h3 class="panel_title">Donnez-nous votre avis !</h3> <!--  <form action="" id="CommentForm"> -->
+                        @using (Html.BeginForm("Details", "Receipe", null, FormMethod.Post, new { id = "CommentForm" }))
+                        {
+                            @Html.HiddenFor(m => m.mark)
+                            @Html.HiddenFor(m => m.recette.id)
+                            @Html.HiddenFor(m => m.recetteId)
+                            <div class="filter">
+                                <p><label for="">Notez cette recette :</label></p>
+                                <p>                                    
+                                    <select name="ReceipeRanking" id="ReceipeRanking">
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                    </select>
+                                </p>
+                            </div>
+                            <div class="filter">
+                                <p><label for="">Le titre de votre commentaire</label></p>
+                                @Html.TextBoxFor(t => t.title, null, new { type = "text", placeholder = "Votre titre ici." })
+                            </div>
+                            <div class="filter">
+                                <p><label for="">Votre commentaire</label></p>
+                                @Html.TextBoxFor(t => t.comment, null, new { type = "text", @class = "wide", placeholder = "Votre commentaire ici." })
+                            </div>
+                            <div class="ar" id="CommentValidation" name="CommentValidation">
+                                <input type="submit" class="btn btn_color1" value="Poster !">
+                            </div>
+                        }
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <ul class="comments" id="CommentList">
+                @foreach (var item in Model.comments)
+                {
+                    <li class="comment">
+                        <p class="name">@item.title<span class="note"> -> @item.mark/5</span></p>
+                        <p class="by">par <a href="/Community/Details/@item.userId">@item.userName</a></p>
+                        <p class="text">@item.comment</p>
+                    </li>
+                }
+            </ul>
+            <div class="row showmore" id="ShowMoreBtn">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn_grey"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section "Vous aimerez aussi" -->
+<section class="section">
+    <h2 class="title">~ Vous aimerez aussi... ~</h2>
+    <div class="recettes row">
+        <div class="recettes row">
+            @foreach (var item in Model.bestRecettesData)
+            {
+            <div class="col-xs-6 col-sm-3 recette">
+                <a href="/Receipe/Details/@item.id">
+                    <img src=~/Content/@item.picture alt=@item.name>
+                    <div class="top" title=@item.rating>
+                        <span>
+                            @for (int i = 5; i > 0; i--)
+                                {
+                                    if (i <= @item.rating)
+                                    {
+                            <span class="glyphicon glyphicon-heart"></span>
+                                    }
+                                    else
+                                    {
+                            <span class="glyphicon glyphicon-heart-empty"></span>
+                                    }
+                                }
+                        </span>
+                    </div>
+                    <div class="bot">
+                        <p class="name">@item.name</p>
+                    </div>
+                </a>
+            </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    @Scripts.Render("~/bundles/ReceipeScriptsDetails")
+}

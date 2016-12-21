@@ -1,0 +1,83 @@
+﻿@model ngCooking_Julien.Models.IngredientsDisplayViewModel
+
+@Html.HiddenFor(m => m.NameFilter)
+@Html.HiddenFor(m => m.CategoryFilter)
+
+<h1 class="page-title">Les ingredients</h1>
+<div class="row" id="content_ingredients">
+    <h2 class="title">~ Trouver des ingredient ~</h2>
+    <div class="col-xs-12">
+        <div class="panel">
+            <div class="row imgback">
+                <div class="hidden-xs col-sm-3"></div>
+                <div class="col-xs-12 col-sm-9 fp">
+                    <!-- SELECTION FORM -->
+                    <div class="filters" id="filters">
+                        @using (Ajax.BeginForm("Display", "Ingredients", new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            UpdateTargetId = "IngredientsDisplay",
+                            InsertionMode = InsertionMode.Replace
+                        }))
+                        {
+                                <!-- NAME FILTER -->
+                            <div class="filter">
+                                <p><label for="">Nom de l'ingrédient</label></p>
+                                <p><input type="text" placeholder="ex: Banane" name="NameFilter" id="NameFilter"></p>
+                            </div>
+                                <!-- CATEGORY FILTER -->
+                            <div class="filter">
+                                <p><label for="">Catégorie</label></p>
+                                <p>
+                                    <!-- ALL CATEGORY -->
+                                    <select name="CategoryFilter" id="CategoryFilter">
+                                        <option value=""></option>
+                                        @foreach (var choice in Model.catData)
+                                        {
+                                            <option value=@choice.id.ToString()>@choice.nameToDisplay</option>
+                                        }
+                                    </select>
+                                </p>
+                            </div>
+                                <!-- CALORIES FILTER -->
+                            <div class="filter">
+                                <p><label for="">Nombre de calories <span class="fwn">(kcal/100g)</span></label></p>
+                                <p>
+                                    <span class="span-label">entre : </span>
+                                    <input type="number" class="mr0" placeholder="ex: 70" name="CaloriesFilterMin" id="CaloriesFilterMin">
+                                    <span class="span-label">et</span>
+                                    <input type="number" class="mr0" placeholder="ex: 220" name="CaloriesFilterMax" id="CaloriesFilterMax">
+                                </p>
+                            </div>
+                                <!-- SUBMIT BUTTON -->
+                            <button type="submit" class="btn btn_big btn_color1" value="Submit" id="SubmitBtn">
+                                Rechercher
+                                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <!-- INGREDIENT DISPLAY -->
+        <div class="result" name="IngredientsDisplay" id="IngredientsDisplay">
+            @Html.Partial("_IngredientsDisplay", Model)
+        </div>
+        <!-- SHOWMORE BUTTON -->
+        <div class="row showmore">
+            <div class="col-xs-12">
+                <a class="btn btn_color1" id="ShowMore_btn">
+                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                    Afficher d'avantage
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/IngredientsScripts")
+}
+

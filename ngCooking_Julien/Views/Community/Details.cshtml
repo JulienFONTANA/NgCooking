@@ -1,0 +1,104 @@
+﻿@model ngCooking_Julien.Models.CommunityDetailsViewModel
+
+<section class="section details">
+    <div class="row">
+        <div class="col-vxs-12 col-xs-6 col-sm-5">
+            <div class="avatar-wrap">
+                <img class="avatar" src="~/Content/@Model.cData.picture" alt="@Model.cData.surname">
+            </div>
+        </div>
+        <div class="col-vxs-12 col-xs-6 col-sm-7">
+            <div class="infos">
+                <h1 class="name">@Model.cData.firstname @Model.cData.surname</h1>
+                <p class="level">
+                    @if (@Model.cData.level == 1)
+                    {
+                        <span class="stars">
+                            <span class="glyphicon glyphicon-star"></span>
+                        </span>
+                        <span class="status">Novice</span>
+                    }
+                    else if (@Model.cData.level == 2)
+                    {
+                        <span class="stars">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                        </span>
+                        <span class="status">Confirmé</span>
+                    }
+                    else
+                    {
+                        <span class="stars">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                        </span>
+                        <span class="status">Expert</span>
+                    }
+                </p>
+                <p class="city"><span class="fwb">Ville : </span>@Model.cData.city</p>
+                <p class="age"><span class="fwb">Age : </span>@Model.cData.birth</p>
+                <p class="shared"><span class="fwb">@Model.cData.firstname</span> a partagé <span class="nb">@Model.nbRecettes recettes</span></p>
+                <p class="bio"><span class="fwb">BIO : </span>@Model.cData.bio</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Afficher le bloc ci-dessous uniquement si lutilisateur connecté se rend sur sa propre page -->
+<section class="section newrecette">
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="c">Vous en avez sous la toque ?!</p>
+            <p class="b">
+                <a href="/Receipe/Create" class="btn btn_color1"><span class="glyphicon glyphicon-plus-sign"></span><span>Créez une nouvelle recette</span></a>
+            </p>
+        </div>
+    </div>
+</section>
+
+@if (Model.rData.Count != 0)
+{
+    <section class="section">
+        <h2 class="title">~ Vos recettes ! ~</h2>
+        <div class="recettes row">
+            @foreach (var item in Model.rData)
+            {
+                <div class="col-xs-6 col-sm-3 recette">
+                    <a href="/Receipe/Details/@item.id">
+                        <img src=~/Content/@item.picture alt=@item.name>
+                        <div class="top" title=@item.rating>
+                            <span>
+                                @for (int i = 5; i > 0; i--)
+                                {
+                                    if (i <= @item.rating)
+                                    {
+                                        <span class="glyphicon glyphicon-heart"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-heart-empty"></span>
+                                    }
+                                }
+                            </span>
+                        </div>
+                        <div class="bot">
+                            <p class="name">@item.name</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<a href="@Url.Action("Edit", "Community" , new { id=Model.cData.id })" class="btn btn-default">
+    <span class="icon" aria-hidden="true"></span>
+    Modification
+</a>
+
+<a href="@Url.Action("Index", "Community" )" class="btn btn-default">
+    <span class="icon" aria-hidden="true"></span>
+    Revenir à la liste
+</a>
+

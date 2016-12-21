@@ -1,0 +1,128 @@
+﻿@model ngCooking_Julien.Models.CreateReceipe
+
+@Html.HiddenFor(m => m.ingInCat)
+
+<h1 class="page-title">Nouvelle recette</h1>
+<section class="section" id="content_recettes_new">
+    @using (Html.BeginForm("Create", "Receipe", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.recIdIngredients)
+        @Html.HiddenFor(m => m.recCalories)
+        <!-- LEFT ROW -->
+        <div class="row">
+            <div class="col-xs-6">
+                <!-- RECEIPE NAME -->
+                <p class="line">
+                    <label for="">Le nom de votre recette</label>
+                    @Html.TextAreaFor(t => t.recName, new { @class = "mb0 wide", id = "ReceipeName" })
+                </p>
+
+                <!-- RECEIPE PREPARATION -->
+                <p class="line">
+                    <label for="">Préparation de votre recette</label>
+                    @Html.TextAreaFor(t => t.recPrep, new { @class = "resizable mb0 wide", id = "ReceipePrep" })
+                </p>
+            </div>
+
+            <!-- RECEIPE PICTURE -->
+            <div class="col-xs-6">
+                <p class="line">
+                    <label for="">Photo de la recette</label>
+                    @Html.TextBoxFor(t => t.pictureFile, null, new { type = "file", @class = "mb0" })
+                </p>
+
+                <!-- RECEIPE PICTURE DISPLAY -->
+                <p class="line ac">
+                    @if (Model.pictureFile != null && Model.pictureFile.ContentLength > 0) // && (Model.pictureFile.ContentType == ".png") || (Model.pictureFile.ContentType == ".jpg"))
+                    {
+                        <img class="current_img" src="~/Content/@Model.picturePath" alt="Visuel recette">
+                    }
+                    else
+                    {
+                        <img class="current_img" src="~/Content/img/recette_placeholder.jpg" alt="Visuel recette">
+                    }
+                </p>
+            </div>
+            <div class="col-xs-12">
+                <div class="hr mt2 mb2"></div>
+            </div>
+            <div class="col-xs-12">
+                <p class="line ac">
+                    <label for="">Sélectionnez tous les ingrédients de votre recette</label>
+                </p>
+                <p class="ac">
+                    <!-- RECEIPE INGREDIENTS CATEGORIES -->
+                    <select name="CategorieList" id="CategorieList">
+                        <option id="all" value="all">Toutes les catégories</option>
+                        @foreach (var cat in Model.categories)
+                        {
+                            <option id="@cat.id" value="@cat.id">@cat.nameToDisplay</option>
+                        }
+                    </select>
+
+                    <span class="span-label" id="RightSign"><span class="glyphicon glyphicon-menu-right nm"></span></span>
+
+                    <!-- RECEIPE INGREDIENTS -->
+                    <select name="ReceipeIngr" id="ReceipeIngr">
+                        <option value="empty" id="empty" name="empty">Ingredients</option>
+                    </select>
+
+                    <!-- BUTTON TO ADD AN ING -->
+                    <button type="button" class="btn btn_color3" id="IngAddBtn" name="IngAddBtn">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+
+                </p>
+                <!-- RECEIPE INGREDIENTS LIST -->
+                <div class="ingredients_list">
+                    <ul class="list ac" id="ingVisu"></ul>
+                </div>
+                <div class="ac">
+                    <!-- RECEIPE CALORIES -->
+                    <p class="recette_total_calories" id="ReceipeCalo" name="ReceipeCalo">
+                        <span class="tit">Valeur calorique <span class="mass">(100g)</span> : </span><span class="val" id="totalCal">0<span class="unit">kcal</span></span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="hr mb2"></div>
+            </div>
+
+            <!-- RECEIPE VALIDATION -->
+            <div class="col-xs-12 ac" id="ReceipeValidation" name="ReceipeValidation">
+                <button type="submit" class="btn btn_color3 recette_save"><span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span></button>
+            </div>
+
+            <!-- TO HIDE UNTIL VALIDATION -->
+            <!-- RECEIPE CREATION SUCESS -->
+            <div class="col-xs-12" id="CreationSucess" name="CreationSucess">
+                <p class="ac mt2 tb">
+                    <span class="glyphicon glyphicon-thumbs-up color3"></span>
+                    <span>Votre recette a bien été ajoutée !</span>
+                </p>
+            </div>
+
+            <!-- TO HIDE UNTIL VALIDATION -->
+            <!-- RECEIPE CREATION ERROR -->
+            <div class="col-xs-12" id="CreationFailed" name="CreationFailed">
+                <p class="ac mt2 tb">
+                    <span class="glyphicon glyphicon-exclamation-sign color2"></span>
+                    <span>Woops ! Votre recette est super foireuse</span>
+                </p>
+                <p class="ac">Vous avez dû oublier quelque chose...</p>
+            </div>
+
+            <!-- TO HIDE UNTIL SUCESS -->
+            <!-- MY RECEIPE -->
+            <div class="col-xs-12" id="MyReceipe" name="MyReceipe">
+                <p class="ac">
+                    <a class="btn btn_color1" href="/Community/Details/@Model.userId"><span class="glyphicon glyphicon-cutlery"></span><span>Mes recettes</span></a>
+                </p>
+            </div>
+        </div>
+    }
+</section>
+
+@section scripts {
+    @Scripts.Render("~/bundles/ReceipeScripts")
+}

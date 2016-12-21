@@ -1,0 +1,49 @@
+﻿@model ngCooking_Julien.Models.IngredientsDisplayViewModel
+
+<div class="ingredients row">
+    @if (Model.ingVal.ingData.Count == 0)
+    {
+        <p class="col-xs-12 blank">Aucun ingrédient ne correspond à votre recherche</p>
+    }
+    @foreach (var ing in Model.ingVal.ingData)
+    {
+        <div class="col-xs-12 ingredient">
+            <div class="ing-wrap">
+                <div class="top">
+                    <p class="name">@ing.name</p>
+                    <p class="category">@ing.categoryName</p>
+                    <img class="img" src="~/Content/img/ingredients/@ing.picture" alt="@ing.name">
+                    <div class="calories-wrap">
+                        <div class="val">
+                            <span>@ing.calories kcal</span>
+                            <div class="battery">
+                                <!-- pourcentage ci-dessous à moduler en fonction du nombre de calories de l'ingredient sur nombre de calories max -->
+                                <div class="level" style="width: @ing.percentage"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bot">
+                    <div class="list">
+                        @if (Model.ingVal.similIng.Count != 0)
+                        {
+                            <p class="list-title">Aliments similaires</p>
+                            <ul>
+                                @if (Model.ingVal.similIng.ContainsKey(ing.id))
+                                {
+                                    foreach (var sim in Model.ingVal.similIng[ing.id])
+                                    {
+                                        <li class="item">
+                                            <img class="item-img" src="~/Content/img/ingredients/@sim.picture" alt="@sim.name">
+                                            <p class="item-name" title=@sim.name>@sim.name</p>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
