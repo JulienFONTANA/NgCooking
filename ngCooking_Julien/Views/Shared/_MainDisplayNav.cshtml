@@ -1,4 +1,6 @@
-﻿<nav id="nav">
+﻿@model Boolean
+
+<nav id="nav">
     <ul class="menu">
         @if (ViewBag.Where == "Home")
         {
@@ -34,20 +36,24 @@
     </ul>
 
     <div class="account-area">
+        @if (!Model)
+        {
+            <a href="@Url.Action("Login", "Community")" class="button connect" id="ConnectBtn">
+                <span class="icon" aria-hidden="true"></span>
+                Connexion
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Action("RedirectToComDetails", "Community")" class="button account" id="ProfilBtn">
+                <span class="icon" aria-hidden="true"></span>
+                Mon profil
+            </a>
 
-        <a href="@Url.Action("Login", "Community")" class="button connect" id="ConnectBtn">
-            <span class="icon" aria-hidden="true"></span>
-            Connexion
-        </a>
-
-        <a href="@Url.Action("RedirectToComDetails", "Community")" class="button account" id="ProfilBtn">
-            <span class="icon" aria-hidden="true"></span>
-            Mon profil
-        </a>
-
-        <a href="@Url.Action("Logout", "Community")" class="button deconnect" id="DiscoBtn">
-            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            Deconnexion
-        </a>
+            <a href="@Url.Action("Logout", "Community")" class="button deconnect" id="DiscoBtn">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                Deconnexion
+            </a>
+        }
     </div>
 </nav>

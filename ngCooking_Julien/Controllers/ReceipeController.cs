@@ -37,7 +37,7 @@ namespace ngCooking_Julien.Controllers
             return View(RecetteView);
         }
 
-        // GET: Receipe/Details/poulet-citron
+        // GET: Receipe/Details/poulet-citron 
         [HttpGet]
         public ActionResult Details(string id)
         {
@@ -65,8 +65,10 @@ namespace ngCooking_Julien.Controllers
                 HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 var cookieId = Convert.ToInt32(FormsAuthentication.Decrypt(authCookie.Value).Name);
 
-                if (rd.db.Comments.Any(c => c.userId == cookieId))
+                var commentsList = rd.db.Comments.Where(c => c.recettesId == rd.recetteId).ToList();
+                if (commentsList != null && (commentsList.Any(c => c.userId == cookieId)))
                 {
+                    // Deja un commentaire de l'utilisateur sur la recette
                     return RedirectToAction("Details");
                 }
 

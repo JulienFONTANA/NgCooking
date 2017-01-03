@@ -110,9 +110,15 @@ namespace ngCooking_Julien.Controllers
             cookie1.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie1);
 
-            //FormsAuthentication.RedirectToLoginPage();
-
             return Redirect("/home");
+        }
+
+        public ActionResult DisplayNav()
+        {
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            bool UserConnected = (authCookie != null) ? true : false;
+                 
+            return PartialView("_MainDisplayNav", UserConnected);
         }
 
         protected override void Dispose(bool disposing)

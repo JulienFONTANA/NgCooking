@@ -13,7 +13,7 @@ namespace ngCooking_Julien.Controllers
         private readonly ngCookingDB db = new ngCookingDB();
 
         [ChildActionOnly]
-        public ActionResult ReceipeCount()
+        public ActionResult ReceipeCount() // MAJ du nombre de recettes
         {
             var receipeCount = db.Recettes.Count();
 

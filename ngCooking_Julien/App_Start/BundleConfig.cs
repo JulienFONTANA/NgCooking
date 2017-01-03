@@ -34,9 +34,6 @@ namespace ngCooking_Julien
                       "~/Content/style.css"));
 
             // Bundle maisons
-            bundles.Add(new ScriptBundle("~/bundles/NavigationScripts").Include(
-                        "~/Scripts/Scripts/NavigationScripts.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/CommunityScripts").Include(
                         "~/Scripts/Scripts/CommunityScripts.js"));
 
